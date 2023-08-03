@@ -32,14 +32,19 @@ get("/payment/new") do
 end
 
 get("/payment/results") do
-  @rate = (params.fetch("user_apr")).to_f/100
-  @time = (params.fetch("user_years")).to_i*12
+
+  @rate = (params.fetch("user_apr")).to_f
+  @time = (params.fetch("user_years")).to_i
   @loan = (params.fetch("user_pv")).to_f
 
-  @payment = (@loan*((@rate*(1+@rate)**@time)/((1+@rate)**@time-1))).round(2)
-#@payment = ((@rate*@loan) / (1-(1-@rate)/@time)).to_f.round(2)
+  @rate_i = @rate/100
+  @months = @time*12
+
+  @payment = (@loan*((@rate_i*(1+@rate_i)**@months)/((1+@rate_i)**@months-1))).round(2)
+
   erb(:payment_result)
 end
+
 
 
 
