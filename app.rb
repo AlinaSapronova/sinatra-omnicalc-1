@@ -20,11 +20,37 @@ get("/square_root/new") do
   erb(:square_root)
 end
 
+get("/square_root/results") do
+  @the_digits = params.fetch("digits")
+  @the_result = Math.sqrt(params.fetch("digits").to_f)
+  erb(:square_root_results)
+end
+
 
 get("/payment/new") do
   erb(:payment_new)
 end
 
+get("/payment/results") do
+  @rate = (params.fetch("user_apr")).to_f/100
+  @time = (params.fetch("user_years")).to_i*12
+  @loan = (params.fetch("user_pv")).to_f
+
+  @payment = (@loan*((@rate*(1+@rate)**@time)/((1+@rate)**@time-1))).round(2)
+#@payment = ((@rate*@loan) / (1-(1-@rate)/@time)).to_f.round(2)
+  erb(:payment_result)
+end
+
+
+
 get("/random/new") do
   erb(:random_new)
+end
+
+get("/random/results") do
+  @first_one = (params.fetch("user_min")).to_f
+  @second_one = (params.fetch("user_max")).to_f
+  @result = rand(@first_one..@second_one)
+
+erb(:random_result)
 end
