@@ -5,7 +5,7 @@
     APR
   </dt>
   <dd>
-    <%= @rate.to_fs(:percentage) %>
+    <%= @rate.to_fs(:percentage, { :precision => 4 } )  %>
   </dd>
 
   <dt>
